@@ -9,9 +9,6 @@ export default class Airport {
   }
 
   set name(value) {
-    if (typeof this.name !== 'string') {
-      throw new TypeError('name must be a string');
-    }
     this._name = value;
   }
 
@@ -20,9 +17,6 @@ export default class Airport {
   }
 
   set code(value) {
-    if (typeof code !== 'string') {
-      throw new TypeError('code must be a string');
-    }
     this._code = value;
   }
 
