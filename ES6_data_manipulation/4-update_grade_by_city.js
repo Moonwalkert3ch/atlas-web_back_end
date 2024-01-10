@@ -10,10 +10,17 @@ export default function updateStudentGradeByCity(studentList, city, newGrades) {
     // find new grade for current student
     const currentGrade = newGrades.find((grade) => grade.studentId === student.id);
 
-    // add grade or n/a if not found
-    const setGrade = currentGrade && currentGrade.grade || 'N/A';
+    // initialize variable
+    let setGrade;
 
-    // returns object
+    //check if grade is found
+    if (currentGrade) {
+      setGrade = currentGrade.grade;
+    } else {
+      setGrade = 'N/A';
+    }
+
+    // returns object and value
     return { ...student, grade: setGrade };
   });
 
