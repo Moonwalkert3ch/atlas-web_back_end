@@ -7,7 +7,7 @@ export default function getListStudentIds(studentList) {
   }
 
   // create new array of ids
-  const studentIds = studentList.map(students => students.id);
+  const studentIds = studentList.map((students) => students.id);
 
   // returns array of ids
   return studentIds;
