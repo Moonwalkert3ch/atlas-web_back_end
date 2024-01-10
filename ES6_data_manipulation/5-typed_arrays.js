@@ -1,7 +1,8 @@
 // function thtat returns a new arraybiffer with int8 value
 
 export default function createInt8TypedArray(length, position, value) {
-  const int8View = new DataView(new ArrayBuffer(length));
+  const buffer = new ArrayBuffer(length);
+  const int8View = new DataView(buffer);
 
   // try setting the value at int8array position
   try {
