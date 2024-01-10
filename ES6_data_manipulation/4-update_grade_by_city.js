@@ -6,14 +6,13 @@ export default function updateStudentGradeByCity(studentList, city, newGrades) {
 
   // map grades for students by city
   const currentStudent = studentsByCity.map((student) => {
-
     // find new grade for current student
     const currentGrade = newGrades.find((grade) => grade.studentId === student.id);
 
     // initialize variable
     let setGrade;
 
-    //check if grade is found
+    // check if grade is found
     if (currentGrade) {
       setGrade = currentGrade.grade;
     } else {
