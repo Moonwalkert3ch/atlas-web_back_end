@@ -6,7 +6,7 @@ import math
 
 
 def floor(n: float) -> int:
-    """Returns the floor
-    Param Arg: n - a float"""
+    """Returns: int - the floor of the float.
+    Param Arg: n - the float number."""
 
     return math.floor(n)
