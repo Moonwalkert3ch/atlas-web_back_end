@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Defines a function that takes a float as argument and 
+"""Defines a function that takes a float as argument and
 returns the string representation of the float"""
 
 
