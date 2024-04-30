@@ -8,7 +8,7 @@ import math
 def floor(n: float) -> int:
     """
     Returns the floor of the float.
-    Param Arg: n - the float number.
+    Params: Arg1: n - the float number.
     Return: int- the floor of the float n
     """
 
