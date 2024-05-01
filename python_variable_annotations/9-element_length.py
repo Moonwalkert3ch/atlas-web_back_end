@@ -5,7 +5,7 @@ the input list"""
 from typing import Iterable, List, Sequence, Tuple
 
 
-def element_length(lst: Iterable[Sequence]) -> List[Tuple[Sequence, int]]:   
+def element_length(lst: Iterable[Sequence]) -> List[Tuple[Sequence, int]]:
     """Returns the values in the list
     Parameters Args: lst(Iterable[Sequence]) - the iterable object.
     Returns: List[Tuple[Sequence, int]] - the list of tuples"""
