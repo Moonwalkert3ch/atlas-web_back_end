@@ -2,12 +2,12 @@
 """Defines a function that iterates through
 the input list"""
 
-from typing import List, Tuple
+from typing import Iterable, List, Tuple
 
 
-def element_length(lst: List[str]) -> List[Tuple[str, int]]:
+def element_length(lst: Iterable) -> List[Tuple]:   
     """Returns the values in the list
-    Parameters Args: lst (List[str]) - the list of strings
-    Returns: List[Tuple[str, int]] - the list of tuples"""
+    Parameters Args: lst(Iterable) - the iterable object.
+    Returns: List[Tuple] - the list of tuples"""
 
     return [(i, len(i)) for i in lst]
