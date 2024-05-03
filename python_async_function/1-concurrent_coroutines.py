@@ -22,11 +22,12 @@ async def wait_n(n: int, max_delay: int) -> List[float]:
     Args2: max_delay(int) - max amount of random delay count
     Return - list of delays
     """
-    delays = {}
-    tasks = [asyncio.create_task(wait_random(max_delay)) for i in range(n)]
+    delays = []
+    tasks = [asyncio.create_task(wait_random(max_delay)) for _ in range(n)]
 
     # Execute tasks concurrently and collect the results
-    for spawn, task in enumerate(tasks):
-        delays[spawn] = await task
+    for task in asyncio.as_completed(tasks):
+        delay = await task
+        delays.append(delay)
 
-    return [delays[spawn] for spawn in range(n)]
+    return delays
