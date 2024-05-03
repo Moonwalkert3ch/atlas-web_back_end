@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Define an async routine that returns the list of all
 the random delay float values"""
-
 import asyncio
 from typing import List
 import random
