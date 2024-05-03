@@ -17,7 +17,7 @@ async def wait_n(n: int, max_delay: int) -> List[float]:
     """
     delays = []
     async with asyncio.TaskGroup as tg:
-        for lists in range(n):
+        for _ in range(n):
             tg.create_task(wait_random(max_delay))
         async for task in tg:
             delays.append(task.result())
