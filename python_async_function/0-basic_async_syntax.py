@@ -13,3 +13,10 @@ async def wait_random(max_delay: float = 10) -> float:
     delay: float = random.uniform(0, max_delay)
     await asyncio.sleep(delay)
     return delay
+
+async def main() -> None:
+    """Creates entry point function"""
+    random_delay: float = await wait_random()
+    print(f"Waited for {random_delay} seconds")
+
+asyncio.run(main())
