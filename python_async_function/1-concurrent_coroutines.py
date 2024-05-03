@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
-"""Define an async routine that returns the list of all
-the random delay float values"""
+"""Import wait_random from the previous python file that you’ve written and write an async routine called wait_n that takes in 2 int arguments (in this order): n and max_delay. You will spawn wait_random n times with the specified max_delay.
+
+wait_n should return the list of all the delays (float values). The list of the delays should be in ascending order without using sort() because of concurrency."""
+
 import asyncio
 from typing import List
 import random
-import importlib.util
-
-
-spec = importlib.util.spec_from_file_location("basic_async_syntax", "/home/moonwalker/atlas-web_back_end/python_async_function/0-basic_async_syntax.py")
-basic_async_syntax = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(basic_async_syntax)
-wait_random = basic_async_syntax.wait_random
+wait_random = __import__('0-basic_async_syntax').wait_random
 
 
 async def wait_n(n: int, max_delay: int) -> List[float]:
@@ -20,12 +16,11 @@ async def wait_n(n: int, max_delay: int) -> List[float]:
     Args2: max_delay(int) - max amount of random delay count
     Return - list of delays
     """
-    delays = {}  # Dictionary to preserve order
-    tasks = [asyncio.create_task(wait_random(max_delay)) for _ in range(n)]
+    delays = {}
+    tasks = [asyncio.create_task(wait_random(max_delay)) for i in range(n)]
 
     # Execute tasks concurrently and collect the results
-    for idx, task in enumerate(tasks):
-        delays[idx] = await task
+    for spawn, task in enumerate(tasks):
+        delays[spawn] = await task
 
-    # Extract delays from the dictionary while preserving the original order
-    return [delays[idx] for idx in range(n)]
+    return [delays[spawn] for spawn in range(n)]
