@@ -9,8 +9,7 @@ module to measure an approximate elapsed time."""
 
 from asyncio import run
 from typing import Any, Callable, List
-from time import time,sleep
-from functools import wraps
+from time import time
 
 wait_n = __import__('1-concurrent_coroutines').wait_n
 
@@ -19,15 +18,12 @@ def measure_time(n: int, max_delay: int) -> float:
     """
     Returns the average execution
     Parameter Args1: n(int) - number of times called
-    Args2: max_delay - max amount of delays
-    Return - a float measurement
+    Args2: max_delay(int) - max amount of delays
+    Return(float) - a float measurement
     """
-    total_time = 0
-
-    for _ in range(n):
-        start_time = time()
-        run(wait_n(n, max_delay))
-        end_time = time()
-        elapsed_time = end_time - start_time
+    start_time = time()
+    run(wait_n(n, max_delay))
+    end_time = time()
+    elapsed_time = end_time - start_time
 
     return elapsed_time / n
