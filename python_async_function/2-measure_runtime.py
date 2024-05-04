@@ -9,7 +9,7 @@ module to measure an approximate elapsed time."""
 
 from asyncio import run
 from typing import Any, Callable, List
-from time import perf_counter
+from time import time,sleep
 from functools import wraps
 
 wait_n = __import__('1-concurrent_coroutines').wait_n
@@ -25,9 +25,9 @@ def measure_time(n: int, max_delay: int) -> float:
     total_time = 0
 
     for _ in range(n):
-        start_time = perf_counter()
+        start_time = time()
         run(wait_n(n, max_delay))
-        end_time = perf_counter()
+        end_time = time()
         elapsed_time = end_time - start_time
         total_time += elapsed_time
 
