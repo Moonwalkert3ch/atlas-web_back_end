@@ -4,7 +4,6 @@
 import asyncio
 from typing import List
 import random
-
 task_wait_random = __import__('3-tasks').task_wait_random
 
 
@@ -16,11 +15,15 @@ async def task_wait_n(n: int, max_delay: int) -> List[float]:
     Return - list of delays
     """
     delays = []
-    tasks = [asyncio.create_task(task_wait_random(max_delay)) for _ in range(n)]
+    spawn_task = []
 
-    # Execute tasks concurrently and collect the results
-    for task in asyncio.as_completed(tasks):
-        delay = await task
-        delays.append(delay)
+    # Create tasks and add callback to collect results
+    for _ in range(n):
+        delayed_task = task_wait_random(max_delay)
+        delayed_task.add_done_callback(lambda x: delays.append(x.result()))
+        spawn_task.append(delayed_task)
+
+    # Execute tasks concurrently
+    await asyncio.gather(*spawn_task)
 
     return delays
