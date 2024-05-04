@@ -29,6 +29,5 @@ def measure_time(n: int, max_delay: int) -> float:
         run(wait_n(n, max_delay))
         end_time = time()
         elapsed_time = end_time - start_time
-        total_time += elapsed_time
 
-    return total_time / n
+    return elapsed_time / n
