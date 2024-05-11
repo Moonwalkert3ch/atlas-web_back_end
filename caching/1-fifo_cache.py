@@ -9,16 +9,26 @@ class FIFOCache(BaseCaching):
     """will inherit from the parent class it can be
     overloaded but we will set limits to handle this
     type situation value
-    put - assigned the key/value to the dictionary
-    get - stores the cache in the dictionary space"""
+    __init__ - initiates the class instance
+    put - method that assigns the key/value to the dictionary
+    get - method that stores the cache in the dictionary space"""
 
     def __init__(self):
+        """initializes class instance"""
         super().__init__()
 
     def put(self, key, item):
+        """adds the key/value to cache data"""
         if key is not None and item is not None:
             if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
                discard_key = next(iter(self.cache_data))
                del self.cache_data[discard_key]
                print(f"DISCARD: {discard_key}\n")
             self.cache_data[key] = item
+
+    def get(self, key):
+        """stores the cache data into the key value"""
+        if key is not None and key in self.cache_data:
+            return self.cache_data[key]
+        return None
+
