@@ -22,7 +22,7 @@ class LRUCache(BaseCaching):
                 if self.order:
                     discard_key = self.order.pop(0)
                     del self.cache_data[discard_key]
-                    print(f"DISCARD: {discard_key}")
+                    print(f"DISCARD: {discard_key}")    
             else:
                 self.order.append(key)
             self.cache_data[key] = item
