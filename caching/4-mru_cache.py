@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Create a class MRUCache that inherits from BaseCaching and is a caching system:"""
+"""Create a class MRUCache that inherits from BaseCaching
+and is a caching system:"""
 
 BaseCaching = __import__('base_caching').BaseCaching
 
@@ -19,11 +20,10 @@ class MRUCache(BaseCaching):
         if key is not None and item is not None:
             if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
                 if self.order:
-                    mru_key = self.order.pop()
+                    mru_key = self.order.pop(-1)
                     del self.cache_data[mru_key]
-                    print(f"DISCARD: {mru_key}")    
-            else:
-                self.order.append(key)
+                    print(f"DISCARD: {mru_key}")
+            self.order.append(key)
             self.cache_data[key] = item
 
     def get(self, key):
