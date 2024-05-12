@@ -20,11 +20,12 @@ class FIFOCache(BaseCaching):
     def put(self, key, item):
         """adds the key/value to cache data"""
         if key is not None and item is not None:
-            if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-                discard_key = next(iter(self.cache_data))
+            if len(self.cache_data) > BaseCaching.MAX_ITEMS:
+                discard_key = list(self.cache_data.keys())[0]
                 del self.cache_data[discard_key]
-                print(f"DISCARD: {discard_key}\n")
+                print(f"DISCARD: {discard_key}")
             self.cache_data[key] = item
+        pass
 
     def get(self, key):
         """stores the cache data into the key value"""
