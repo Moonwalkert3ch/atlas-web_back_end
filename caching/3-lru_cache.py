@@ -23,9 +23,9 @@ class LRUCache(BaseCaching):
         if key in self.cache_data:
             self.order.remove(key)
         elif len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-                lru_key = self.order.pop(0)
-                del self.cache_data[lru_key]
-                print(f"DISCARD: {lru_key}")
+            lru_key = self.order.pop(0)
+            del self.cache_data[lru_key]
+            print(f"DISCARD: {lru_key}")
 
         self.order.append(key)
         self.cache_data[key] = item
@@ -33,7 +33,7 @@ class LRUCache(BaseCaching):
     def get(self, key):
         """Returns the value linked to the key"""
         if key is None or key not in self.cache_data:
-             return None
+            return None
 
         self.order.remove(key)
         self.order.append(key)
