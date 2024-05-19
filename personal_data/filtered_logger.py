@@ -106,5 +106,27 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
 
     return connection
 
+
 def main() -> None:
     """Description: Obtains a db connection and display all rows"""
+    db = get_db()
+    logger = get_logger()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    rows = cursor.fetchall()
+
+    # For each row, a log message is constructed
+    for row in rows:
+        message_log = (
+            f"name={row['name']}; email={row['email']}; phone={row['phone']}; "
+            f"ssn={row['ssn']}; password={row['password']}; ip={row['ip']}; "
+            f"last_login={row['last_login']}; user_agent={row['user_agent']};"
+        )
+        logger.info(message_log)
+
+    cursor.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
