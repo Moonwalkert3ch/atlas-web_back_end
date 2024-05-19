@@ -3,9 +3,11 @@
 returns the log message obfuscated"""
 
 import re
-from typing import List
+from typing import List, Tuple
 import logging
 
+# Creates the tuple pii_fields at the root of module
+PII_FIELDS: Tuple[str, str, str, str, str] = ('name', 'email', 'phone', 'ssn', 'password')
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
@@ -27,13 +29,7 @@ class RedactingFormatter(logging.Formatter):
         """
         Writes a function that returns the log message obfuscated
         Param Arguments:
-        fields(list(str)): a list of strings representing all fields
-        to obfuscate
-        redaction: a string representing by what the field will be
-        obfuscated
         message(str): a string representing the log line
-        separator(str): a string representing by which character is
-        separating all fields in the log line
         Return: a regex to replace occurrences of certain field values.
         """
         for field in self.fields:
@@ -53,3 +49,21 @@ class RedactingFormatter(logging.Formatter):
         record.msg = recorded_message
         # call parent method class
         return super().format(record)
+
+def get_logger() -> logging.Logger:
+    """takes no args and returns a logging.Logger object"""
+    # creates the logger
+    logger = logging.getLogger('user_data')
+    # set the logging level
+    logger.setLevel(logging.INFO)
+    # disallow logged messages to propogate to other users
+    logger.propagate = False
+
+    # creates the streamhandler
+    stream_handler = logging.StreamHandler()
+    # create stream handler format
+    stream_handler.setFormatter(RedactingFormatter(PII_FIELDS))
+    # adds handler to the log
+    logger.addHandler(stream_handler)
+
+    return logger
