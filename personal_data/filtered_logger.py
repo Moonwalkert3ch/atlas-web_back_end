@@ -16,6 +16,7 @@ class RedactingFormatter(logging.Formatter):
     SEPARATOR = ";"
 
     def __init__(self, fields=None):
+        """initiate class"""
         super().__init__(self.FORMAT)
         if fields is None:
             self.fields = []
@@ -37,5 +38,6 @@ class RedactingFormatter(logging.Formatter):
         return message
 
     def format(self, record: logging.LogRecord) -> str:
+        """to filter values in incoming log records"""
         record.msg = self.filter_datum(record.msg)
         return super().format(record)
