@@ -75,11 +75,20 @@ def get_logger() -> logging.Logger:
 
     return logger
 
+
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """
-    Description: connects to a secure holberton database to read a users table. The database is protected by a username and password that are set as environment variables on the server named PERSONAL_DATA_DB_USERNAME (set the default as “root”), PERSONAL_DATA_DB_PASSWORD (set the default as an empty string) and PERSONAL_DATA_DB_HOST (set the default as “localhost”).
+    Description: connects to a secure holberton database
+    to read a users table. The database is protected by a
+    username and password that are set as environment
+    variables on the server named PERSONAL_DATA_DB_USERNAME
+    (set the default as “root”), PERSONAL_DATA_DB_PASSWORD
+    (set the default as an empty string) and
+    PERSONAL_DATA_DB_HOST (set the default as “localhost”).
     The database name is stored in PERSONAL_DATA_DB_NAME.
-    Implement a get_db function that returns a connector to the database (mysql.connector.connection.MySQLConnection object).
+    Implement a get_db function that returns a connector
+    to the database
+    (mysql.connector.connection.MySQLConnection object).
     """
     # retreive variable environment
     username: str = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
