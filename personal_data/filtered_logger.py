@@ -81,4 +81,18 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     The database name is stored in PERSONAL_DATA_DB_NAME.
     Implement a get_db function that returns a connector to the database (mysql.connector.connection.MySQLConnection object).
     """
-    
+    # retreive variable environment
+    username: str = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
+    password: str = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
+    host: str = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
+    database: str = os.getenv('PERSONAL_DATA_DB_NAME')
+
+    # connect to the database
+    connection: MySQLConnection = mysql.connector.connect(
+        user=username,
+        password=password,
+        host=host,
+        database=database
+    )
+
+    return connection
