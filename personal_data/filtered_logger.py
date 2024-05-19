@@ -7,7 +7,9 @@ from typing import List, Tuple
 import logging
 
 # Creates the tuple pii_fields at the root of module
-PII_FIELDS: Tuple[str, str, str, str, str] = ('name', 'email', 'phone', 'ssn', 'password')
+PII_FIELDS: Tuple[str, str, str, str, str] = (
+    'name', 'email', 'phone', 'ssn', 'password')
+
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
@@ -49,6 +51,7 @@ class RedactingFormatter(logging.Formatter):
         record.msg = recorded_message
         # call parent method class
         return super().format(record)
+
 
 def get_logger() -> logging.Logger:
     """takes no args and returns a logging.Logger object"""
