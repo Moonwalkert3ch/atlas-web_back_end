@@ -15,8 +15,8 @@ class RedactingFormatter(logging.Formatter):
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
-    def __init__(self, fields=None):
-        """initiate class"""
+    def __init__(self, fields: List[str]):
+        """Initializes class method"""
         super().__init__(self.FORMAT)
         if fields is None:
             self.fields = []
@@ -28,7 +28,11 @@ class RedactingFormatter(logging.Formatter):
         Writes a function that returns the log message obfuscated
         Param Arguments:
         fields(list(str)): a list of strings representing all fields to obfuscate
-        Return(str): Values for fields in fields should be filtered..
+        redaction: a string representing by what the field will be obfuscated
+        message(str): a string representing the log line
+        separator(str): a string representing by which character is
+        separating all fields in the log line
+        Return: a regex to replace occurrences of certain field values.
         """
         for field in self.fields:
             # create the regex pattern for the field
@@ -38,6 +42,9 @@ class RedactingFormatter(logging.Formatter):
         return message
 
     def format(self, record: logging.LogRecord) -> str:
-        """to filter values in incoming log records"""
-        record.msg = self.filter_datum(record.msg)
+        """filters the values in incoming log records using filter_datum"""
+        recorded_message = self.filter_datum(record.msg)
+        # set message back
+        record.msg = recorded_message
+        # call parent method class
         return super().format(record)
