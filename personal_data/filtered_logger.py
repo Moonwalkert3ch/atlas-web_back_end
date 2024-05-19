@@ -105,3 +105,6 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     )
 
     return connection
+
+def main() -> None:
+    """Description: Obtains a db connection and display all rows"""
