@@ -40,8 +40,7 @@ class RedactingFormatter(logging.Formatter):
             # create the regex pattern for the field
             field_pattern = f"{re.escape(field)}=[^;]*"
             # then i substitute the field with the redaction
-            message = re.sub(field_pattern, f"{field}={
-                             self.REDACTION}", message)
+            message = re.sub(field_pattern, f"{field}={self.REDACTION}",     message)
         return message
 
     def format(self, record: logging.LogRecord) -> str:
