@@ -2,6 +2,10 @@
 """Module that creates a class that inherits form Auth"""
 from api.v1.auth.auth import Auth
 from base64 import b64decode
+from typing import TypeVar
+
+
+User = TypeVar('User')
 
 
 class BasicAuth(Auth):
@@ -72,3 +76,32 @@ class BasicAuth(Auth):
 
         # Return the user email and password
         return (email, password)
+
+    def user_object_from_credentials(
+            self,
+            user_email: str,
+            user_pwd: str) -> TypeVar('User'):
+        """method that returns user email/password instance
+        Parameter Args:
+        user_email(str) - users email
+        user_pwd(str) - users password
+        return - user instance
+        """
+        if user_email is None or not isinstance(user_email, str):
+            return None
+        if user_pwd is None or not isinstance(user_pwd, str):
+            return None
+
+        # look for the user by email
+        user_search = User.search({'email': user_email})
+        if not user_search:
+            return None
+
+        # Use first instance
+        user = user_search[0]
+
+        # check if password is correct
+        if not user.is_valid_password(user_pwd):
+            return None
+
+        return user
