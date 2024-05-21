@@ -10,7 +10,19 @@ class Auth:
     """Class that manages the api authentication"""
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Method that returns false"""
-        return False
+        if path is None:
+            return True
+
+        if excluded_paths is None or len(excluded_paths) == 0:
+            return True
+
+        # adds consistent slashes / eof name
+        path_view = path.rstrip('/') + '/'
+
+        for excluded_path in excluded_paths:
+            if path_view == excluded_path:
+                return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """Public method returns none"""
