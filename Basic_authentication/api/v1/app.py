@@ -20,6 +20,28 @@ if AUTH_TYPE == "auth":
     auth = Auth()
 
 
+@app.before_request
+def before_request():
+    """Handler before requests"""
+    if auth is None:
+        return
+
+    excluded_paths = [
+        '/api/v1/status/',
+        '/api/v1/unauthorized/',
+        '/api/v1/forbidden/']
+
+    if request.path not in excluded_paths:
+        if not auth.require_auth(request.path, excluded_paths):
+            abort(401)
+
+        if auth.authorization_header(request) is None:
+            abort(401)
+
+        if auth.current_user(request) is None:
+            abort(403)
+
+
 @app.errorhandler(403)
 def forbidden_error(error) -> str:
     """ for forbidden access
