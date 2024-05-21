@@ -25,8 +25,18 @@ class Auth:
         return True
 
     def authorization_header(self, request=None) -> str:
-        """Public method returns none"""
-        return None
+        """Returns the value of the Authorization header from
+        the Flask request object.
+        :param request: The Flask request object
+        :return: The value of the Authorization header if
+        present, otherwise None"""
+        if request is None:
+            return None
+
+        if 'Authorization' not in request.headers:
+            return None
+
+        return request.headers['Authorization']
 
     def current_user(self, request=None) -> TypeVar('User'):
         """Public method that returns none"""
