@@ -32,3 +32,11 @@ def unauthorized() -> str:
     GET: method to retrieve error
     Return: raise 401 error"""
     abort(401)
+
+
+@app_views.route('/forbidden', methods=['GET'], strict_slashes=False)
+def forbidden() -> str:
+    """Creates the endpoint for forbidden access
+    GET: method to retrieve error message
+    Return: raise 403 error"""
+    abort(403)

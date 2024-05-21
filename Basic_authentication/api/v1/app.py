@@ -16,7 +16,7 @@ CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 @app.errorhandler(403)
 def forbidden_error(error) -> str:
-    """ for a request unauthorized
+    """ for forbidden access
     """
     return jsonify({"error": "Forbidden"}), 403
 
