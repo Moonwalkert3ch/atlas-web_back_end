@@ -6,9 +6,6 @@ from typing import TypeVar
 from models.user import User
 
 
-User = TypeVar('User')
-
-
 class BasicAuth(Auth):
     """empty class for now"""
 
@@ -90,19 +87,19 @@ class BasicAuth(Auth):
         """
         if user_email is None or not isinstance(user_email, str):
             return None
+
         if user_pwd is None or not isinstance(user_pwd, str):
             return None
 
         # look for the user by email
-        user_search = User.search({'email': user_email})
-        if not user_search:
+        try:
+            user_search = User.search({'email': user_email})
+        except Exception:
             return None
 
-        # Use first instance
-        user = user_search[0]
+        for user in user_search:
+            # check if password is correct
+            if user.is_valid_password(user_pwd):
+                return user
 
-        # check if password is correct
-        if not user.is_valid_password(user_pwd):
-            return None
-
-        return user
+        return None
