@@ -48,6 +48,7 @@ def before_request():
 
     request.current_user = current_user
 
+
 @app.errorhandler(403)
 def forbidden_error(error) -> str:
     """ for forbidden access
