@@ -35,18 +35,18 @@ def before_request():
         '/api/v1/unauthorized/',
         '/api/v1/forbidden/']
 
-    if request.path not in excluded_paths:
-        if not auth.require_auth(request.path, excluded_paths):
-            return
+    if not auth.require_auth(request.path, excluded_paths):
+        return
 
-        if auth.authorization_header(request) is None:
-            abort(401)
+    if auth.authorization_header(request) is None:
+        abort(401)
 
-        request.current_user = auth.current_user(request)
+    current_user = auth.current_user(request)
 
-        if request.current_user(request) is None:
-            abort(403)
+    if current_user is None:
+        abort(403)
 
+    request.current_user = current_user
 
 @app.errorhandler(403)
 def forbidden_error(error) -> str:
