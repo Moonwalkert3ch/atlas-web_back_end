@@ -7,7 +7,7 @@ from models.user import User
 import os
 
 
-@app_view.route('/auth_session/login', methods=['POST'], strict_slashes=False)
+@app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def login():
     """creates a sessiona dn retrieves user values
     Return - list of users
