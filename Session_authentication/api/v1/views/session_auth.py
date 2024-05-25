@@ -36,7 +36,10 @@ def login():
             user_response.set_cookie(session_name, session_id)
             return user_response
 
-@app_views.route('/auth_session/logout', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route('/auth_session/logout',
+                 methods=['DELETE'],
+                 strict_slashes=False)
 def logout():
     """Method that updates delete route"""
     from api.v1.app import auth
