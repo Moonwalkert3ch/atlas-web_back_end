@@ -28,7 +28,7 @@ class SessionAuth(Auth):
     def user_id_for_session_id(self, session_id: str = None) -> str:
         """Creates a session id for the user id.
         Parameter Args:
-        session_id - id of session 
+        session_id - id of session
         Returns(str) -  session id if user valid
         """
         if session_id is None or not isinstance(session_id, str):
