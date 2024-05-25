@@ -9,9 +9,9 @@ from models.user import User
 
 
 class SessionAuth(Auth):
-  
+    """session auth manages session ids"""  
     user_id_by_session_id = {}
-    """session auth manages session ids"""
+
     def create_session(self, user_id: str = None) -> str:
         """Creates a session id for the user id.
         Parameter Args:
