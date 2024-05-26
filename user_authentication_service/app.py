@@ -88,15 +88,12 @@ def profile() -> str:
     """request cookies to find user respond
     with 200 if found"""
     session_id = request.cookies.get('session_id')
-
-    if session_id is None:
-        abort(403)
-
     user = AUTH.get_user_from_session_id(session_id)
-    if user is None:
-        abort(403)
 
-    return jsonify({"email": "<user email>"}), 200
+    if user:
+        return jsonify({"email": "<user email>"}), 200
+    else:
+        abort(403)
 
 
 if __name__ == "__main__":
