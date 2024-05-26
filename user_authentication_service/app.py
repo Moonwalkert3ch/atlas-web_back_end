@@ -14,6 +14,7 @@ AUTH = Auth()
 
 @app.route('/', methods=['GET'])
 def first_message():
+    """first message of open session"""
     message = {"message": "Bienvenue"}
     return flask.jsonify(message)
 
