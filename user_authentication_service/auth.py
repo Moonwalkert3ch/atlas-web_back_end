@@ -116,6 +116,21 @@ class Auth:
 
         return reset_token
 
+    def update_password(self, reset_token: str, password: str) -> None:
+        """hashes the password and update users hashedpw"""
+        try:
+            user = self._db.find_user_by(reset_token=reset_token)
+        except NoResultFound:
+            raise ValueError(
+                "User with the provided reset token does not exist")
+
+        hashed_password = _hash_password(password)
+        user.hashed_password = hashed_password
+        user.reset_token = None
+
+        # Commit changes to the database
+        self._db.commit()
+
 
 def _generate_uuid() -> str:
     """
