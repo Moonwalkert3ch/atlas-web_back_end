@@ -83,10 +83,9 @@ def logout() -> str:
     return response
 
 
-@app.route('/profile', methods=['GET'], strictslashes=False)
+@app.route('/profile', methods=['GET'], strict_slashes=False)
 def profile() -> str:
-    """request cookies to find user respond
-    with 200 if found"""
+    """response to the GET /profile"""
     session_id = request.cookies.get('session_id')
     user = AUTH.get_user_from_session_id(session_id)
     if user:
