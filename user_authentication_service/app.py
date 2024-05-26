@@ -83,7 +83,7 @@ def logout() -> str:
     return response
 
 
-@app.route('/profile', methods=['GET'])
+@app.route('/profile', methods=['GET'], strictslashes=False)
 def profile() -> str:
     """request cookies to find user respond
     with 200 if found"""
@@ -91,7 +91,7 @@ def profile() -> str:
     user = AUTH.get_user_from_session_id(session_id)
 
     if user:
-        return jsonify({"email": "<user email>"}), 200
+        return jsonify({"email": "<user.email>"}), 200
     else:
         abort(403)
 
