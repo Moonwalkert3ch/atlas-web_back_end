@@ -13,6 +13,7 @@ def hash_password(password: str) -> bytes:
 
     return hashed_pw
 
+
 def is_valid(hashed_password: bytes, password: str) -> bool:
     """validate password matches"""
     if isinstance(hashed_password, str):
