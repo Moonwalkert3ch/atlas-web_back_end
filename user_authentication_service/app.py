@@ -63,12 +63,11 @@ def login() -> str:
 
             return response
 
+
 @app.route('/sessions', methods=['DELETE'])
 def logout() -> str:
     """destroys the session and redirect to get"""
     session_id = request.cookies.get('session_id')
-    if session_id is None:
-        abort(403)
 
     user = AUTH.get_user_from_session_id(session_id)
     if user is None:
@@ -77,6 +76,7 @@ def logout() -> str:
     AUTH.destroy_session(user.id)
 
     response = redirect('/')
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
