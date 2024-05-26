@@ -9,6 +9,7 @@ from sqlalchemy.orm.exc import NoResultFound
 from db import DB
 from bcrypt import gensalt, hashpw, checkpw
 from uuid import uuid4
+from auth import Auth
 
 
 def _hash_password(password: str) -> bytes:
@@ -60,6 +61,23 @@ class Auth:
             return checkpw(password.encode('utf-8'), user.hashed_password)
         except NoResultFound:
             return False
+
+    def create_session(self, email: str) -> str:
+        """
+        finds the users email and generates a new uuid
+        and stores it in the database as the users session_id
+        Parameter Args:
+        email(str) - email of the user
+        Return -  session id
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            return None
+        session_id = _generate_uuid()
+        self._db.update_user(user.id, session_id=session_id)
+
+        return session_id
 
 
 def _generate_uuid() -> str:
