@@ -3,7 +3,7 @@
 import flask
 from flask import Flask
 from auth import Auth
-from flask import request
+from flask import request, make_response, redirect
 from flask import abort
 from flask import jsonify
 
@@ -16,10 +16,6 @@ AUTH = Auth()
 def first_message():
     message = {"message": "Bienvenue"}
     return flask.jsonify(message)
-
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="5000")
 
 
 @app.route('/users', methods=['POST'])
@@ -38,3 +34,35 @@ def user_registration():
 
     message = {"email": "<registered email>", "message": "user created"}
     return jsonify(message)
+
+
+@app.route('/sessions', methods=['POST'])
+def login() -> str:
+    """validates user credentials, creates a session if valid and
+    responds appropriately"""
+    form_data = request.form
+
+    if "email" not in form_data:
+        return jsonify({"message": "email required"}), 400
+    elif "password" not in form_data:
+        return jsonify({"message": "password required"}), 400
+    else:
+
+        email = request.form.get("email")
+        pswd = request.form.get("password")
+
+        if AUTH.valid_login(email, pswd) is False:
+            abort(401)
+        else:
+            session_id = AUTH.create_session(email)
+            response = jsonify({
+                "email": email,
+                "message": "logged in"
+                })
+            response.set_cookie('session_id', session_id)
+
+            return response
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port="5000")
