@@ -60,3 +60,19 @@ class DB:
             raise InvalidRequestError
 
         return user
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Method that updates users attributes
+        Parameter Args:
+        user-id(int) - userid of the user to update
+        **kwargs - arbitary keyword args
+        """
+        user = self.find_user_by(id=user_id)
+
+        names = User.__table__.columns.keys()
+        for key in kwargs.keys():
+            if key not in names:
+                raise ValueError
+
+        for key, value in kwargs.items():
+            setattr(user, key, value)
+        self._session.commit()
