@@ -100,7 +100,6 @@ class Auth:
         except NoResultFound:
             raise NoResultFound
 
-
     def get_reset_password_token(self, email: str) -> str:
         """ If it exists, generate a UUID and
             update the user’s reset_token database field
