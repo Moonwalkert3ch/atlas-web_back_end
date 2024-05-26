@@ -9,7 +9,6 @@ from sqlalchemy.orm.exc import NoResultFound
 from db import DB
 from bcrypt import gensalt, hashpw, checkpw
 from uuid import uuid4
-from auth import Auth
 
 
 def _hash_password(password: str) -> bytes:
