@@ -69,13 +69,18 @@ def logout() -> str:
     """destroys the session and redirect to get"""
     session_id = request.cookies.get('session_id')
 
+    if session_id is None:
+        abort(403)
+
     user = AUTH.get_user_from_session_id(session_id)
-    if user is None:
+    if session_id is None:
         abort(403)
 
     AUTH.destroy_session(user.id)
-
     response = redirect('/')
+    response.delete_cookie('session_id')
+
+    return response
 
 
 if __name__ == "__main__":
