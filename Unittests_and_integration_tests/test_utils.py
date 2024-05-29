@@ -6,7 +6,7 @@ from utils import access_nested_map
 
 
 # the test case
-def TestAccessNestedMap(unittest.TestCase):
+class TestAccessNestedMap(unittest.TestCase):
     """creates class that inherits from testcase"""
 
     """the parameterized text"""
