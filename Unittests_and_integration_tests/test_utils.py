@@ -2,14 +2,16 @@
 """Creates a unit test for utils.access_nested_map"""
 import unittest
 from parameterized import parameterized
-from utils import access_nested_map
+from utils import access_nested_map, get_json
+from unittest.mock import patch, Mock
+from typing import Dict
 
 
 # the test case
 class TestAccessNestedMap(unittest.TestCase):
     """creates class that inherits from testcase"""
 
-    """the parameterized text"""
+    # the parameterized text
     @parameterized.expand([
         ({"a": 1}, ("a"), 1),
         ({"a": {"b": 2}}, ("a",), {"b": 2}),
@@ -29,3 +31,28 @@ class TestAccessNestedMap(unittest.TestCase):
         with self.assertRaises(KeyError) as cm:
             access_nested_map(nested_map, key_path)
             self.assertEqual(error, cm.exception)
+
+
+class TestGetJson(unittest.TestCase):
+    """tests the utils json method functionality"""
+
+    @parameterized.expand([
+        ("http://example.com", {"payload": True}),
+        ("http://holberton.io", {"payload": False})
+    ])
+    def test_get_json(self, test_url, test_payload):
+        """method that mocks and patches"""
+        with patch('requests.get') as mock_get:
+            # creates a mock response object and return payload
+            mock_response = Mock()
+            mock_response.json.return_value = test_payload
+            mock_get.return_value = mock_response
+
+            # then call the json function with url
+            response = get_json(test_url)
+
+            # assert request.get only called once
+            mock_get.assert_called_once_with(test_url)
+
+            # assertion for if get_json is equal to payload
+            self.assertEqual(response, test_payload)
