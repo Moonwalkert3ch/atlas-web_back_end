@@ -19,3 +19,14 @@ class TestAccessNestedMap(unittest.TestCase):
         """tests that the method returns that it works"""
         result = access_nested_map(map, path)
         self.assertEqual(result, expected)
+
+    @parameterized.expand([
+        ({}, "a"),
+        ({"a": 1}, ("a", "b"))
+    ])
+
+    def test_access_nested_map_exception(self, map, path):
+        """uses error handker to test input"""
+        with self.assertRaises(KeyError) as context:
+            access_nested_map(map, path)
+        self.assertEqual(str(context.exception), str(path[-1]))
