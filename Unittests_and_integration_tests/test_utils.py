@@ -24,7 +24,6 @@ class TestAccessNestedMap(unittest.TestCase):
         ({}, ("a"), "a"),
         ({("a"): 1}, ("a", "b"), "b")
     ])
-
     def test_access_nested_map_exception(self, map, path):
         """uses error handker to test input"""
         with self.assertRaises(KeyError) as cm:
