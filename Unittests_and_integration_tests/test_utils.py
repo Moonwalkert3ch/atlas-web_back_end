@@ -15,17 +15,17 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": {"b": 2}}, ("a",), {"b": 2}),
         ({"a": {"b": 2}}, ("a", "b"), 2)
     ])
-    def test_access_nested_map(self, map, path, expected):
+    def test_access_nested_map(self, nested_map, key_path, expected):
         """tests that the method returns that it works"""
-        result = access_nested_map(map, path)
+        result = access_nested_map(nested_map, key_path)
         self.assertEqual(result, expected)
 
     @parameterized.expand([
-        ({}, ("a"), "a"),
-        ({("a"): 1}, ("a", "b"), "b")
+        ({}, ("a",), "a"),
+        ({"a": 1}, ("a", "b"), "b")
     ])
-    def test_access_nested_map_exception(self, map, path):
+    def test_access_nested_map_exception(self, nested_map, key_path, error):
         """uses error handker to test input"""
         with self.assertRaises(KeyError) as cm:
-            access_nested_map(map, path)
-        self.assertEqual(str(cm.exception), str(cm.exception))
+            access_nested_map(nested_map, key_path)
+            self.assertEqual(error, cm.exception)
