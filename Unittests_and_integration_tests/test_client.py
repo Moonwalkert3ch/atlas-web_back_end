@@ -67,7 +67,7 @@ class TestGithubOrgClient(unittest.TestCase):
         """ tests the license checker """
         self.assertEqual(GithubOrgClient.has_license(repo, license), expected)
 
- @parameterized_class([
+@parameterized_class([
     {
         "org_payload": fixtures.org_payload,
         "repos_payload": fixtures.repos_payload,
