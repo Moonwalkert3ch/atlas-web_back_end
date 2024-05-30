@@ -11,17 +11,18 @@ import client
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    """class that implements the test_org method"""
+    """Class that implements the test_org method"""
+
     @parameterized.expand([
         ("google",),
         ("abc",)
     ])
-    @patch('client.get_json', return_value={"url": "https://api.github.com/orgs/"})
-    def test_org(self, org_name, result, mock_get):
-        """tests that githuborgclient.org return values"""
+    @patch('utils.get_json', return_value={"url": "https://api.github.com/orgs/"})
+    def test_org(self, org_name, mock_get):
+        """Tests that GithubOrgClient.org returns the correct value"""
         client = GithubOrgClient(org_name)
         result = client.org
-        url = f"https://api.github.com/orgs/{org_name}"
+        expected_url = f"https://api.github.com/orgs/{org_name}"
 
-        mock_get.assert_called_once_with(url)
-        self.assertEqual(result, mock_get.return_value )
+        mock_get.assert_called_once_with(expected_url)
+        self.assertEqual(result, mock_get.return_value)
