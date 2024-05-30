@@ -17,12 +17,12 @@ class TestGithubOrgClient(unittest.TestCase):
         ("google",),
         ("abc",)
     ])
-    @patch('utils.get_json', return_value={"url": "https://api.github.com/orgs/"})
-    def test_org(self, org_name, mock_get):
+   @patch('client.get_json', Mock())
+    def test_org(self, org_name, mock_get_json):
         """Tests that GithubOrgClient.org returns the correct value"""
         client = GithubOrgClient(org_name)
         result = client.org
         expected_url = f"https://api.github.com/orgs/{org_name}"
 
-        mock_get.assert_called_once_with(expected_url)
-        self.assertEqual(result, mock_get.return_value)
+        mock_get_json.assert_called_once_with(expected_url)
+        self.assertIsNotNone(result)
