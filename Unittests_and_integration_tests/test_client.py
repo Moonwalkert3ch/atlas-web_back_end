@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Class to check the githuborgclient functions"""
 import unittest
-from unittest.mock import patch, Mock, PropertyMock, call
-from parameterized import parameterized
+from unittest.mock import patch, Mock, PropertyMock,
+from parameterized import parameterized, parameterized_class
 from client import GithubOrgClient
-from utils import get_json
+from utils import get_json, memoize, access_nested_map
 import utils
 import requests
+import fixtures
 import client
 
 
