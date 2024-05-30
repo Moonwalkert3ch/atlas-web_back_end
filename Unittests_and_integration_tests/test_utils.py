@@ -57,8 +57,10 @@ class TestGetJson(unittest.TestCase):
             # assertion for if get_json is equal to payload
             self.assertEqual(response, test_payload)
 
+
 class TestMemoize(unittest.TestCase):
     """implements a test_memoize method"""
+
     def test_memoize(self):
         """calls a_properties value"""
         class TestClass:
