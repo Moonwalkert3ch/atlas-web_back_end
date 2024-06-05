@@ -9,13 +9,12 @@ from functools import wraps
 def count_calls(method: Callable) -> Callable:
     """defines decorater that counts how many times
     cache class has been called"""
-    key = method.__qualname__
-
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         """"defines wrapper function"""
-        self._redis.incr(key)
-        return method(self, *args, **kwargs)
+        key = method.__qualname__ #use methods name as key
+        self._redis.incr(key) #increments redis count
+        return method(self, *args, **kwargs) # calls original method
     return wrapper
 
 class Cache:
@@ -53,14 +52,14 @@ class Cache:
     def get_str(self, key: str) -> str:
         """parameterize value to string"""
         value = self._redis.get(key)
-        return value.decode('utf-8')
+        return value.decode('utf-8') if value else ''
 
     def get_int(self, key: str) -> int:
         """parameterize value to int"""
         value = self._redis.get(key)
+        if value is None:
+            return 0 # returns default value
         try:
-            if value is None:
-                return 0 # returns default value
             return int(value.decode('utf-8'))
         except ValueError:
-            return TypeError(int(Callable)) # handles con
+            return 0
