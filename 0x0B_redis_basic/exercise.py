@@ -48,4 +48,4 @@ class Cache:
                 return 0 # returns default value
             return int(value.decode('utf-8'))
         except ValueError:
-            return TypeError # handles con
+            return TypeError(int(callable)) # handles con
