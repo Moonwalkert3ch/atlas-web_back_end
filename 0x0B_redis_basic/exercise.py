@@ -41,11 +41,10 @@ class Cache:
         return value.decode('utf-8')
 
     def get_int(self, key: str) -> int:
-        """parameterize value to int"""
+        """ Parameterizes a value from redis to int """
         value = self._redis.get(key)
         try:
-            if value is None:
-                return 0 # returns default value
-            return int(value.decode('utf-8'))
-        except (ValueError, TypeError):
-            return 0 # handles conversion error
+            value = int(value.decode("utf-8"))
+        except Exception:
+            value = 0
+        return value
