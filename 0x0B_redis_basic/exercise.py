@@ -5,6 +5,19 @@ import uuid
 from typing import Union, Optional, Callable
 from functools import wraps
 
+
+def count_calls(method: Callable) -> Callable:
+    """defines decorater that counts how many times
+    cache class has been called"""
+    key = method.__qualname__
+
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """"defines wrapper function"""
+        self._redis.incr(key)
+        return method(self, *args, **kwargs)
+    return wrapper
+
 class Cache:
     """stores Redis client instance"""
     def __init__(self):
@@ -51,15 +64,3 @@ class Cache:
             return int(value.decode('utf-8'))
         except ValueError:
             return TypeError(int(Callable)) # handles con
-
-def count_calls(method: Callable) -> Callable:
-    """defines decorater that counts how many times
-    cache class has been called"""
-    key = method.__qualname__
-
-    @wraps(method)
-    def wrapper(self, *args, **kwargs):
-        """"defines wrapper function"""
-        self._redis.incr(key)
-        return method(self, *args, **kwargs)
-    return wrapper
