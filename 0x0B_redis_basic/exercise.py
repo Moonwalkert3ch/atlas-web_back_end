@@ -17,6 +17,21 @@ def count_calls(method: Callable) -> Callable:
         return method(self, *args, **kwargs) # calls original method
     return wrapper
 
+def call_history(method: Callable) -> Callable:
+    """decorator stores i/o history"""
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """defines wrapper for history"""
+        input_key = "{}:inputs".format(method.__qualname__)
+        output_key = "{}:outputs".format(method.__qualname__)
+        #store i/o lists in redis
+        self._redis.rpush(input_key, str(args))
+        # execute original method
+        format_method = method(self, *args, **kwargs)
+        self._redis.rpush(output_key, format_method)
+        return format_method
+    return wrapper
+
 class Cache:
     """stores Redis client instance"""
     def __init__(self):
@@ -26,6 +41,7 @@ class Cache:
         self._redis.flushdb()
 
     @count_calls
+    @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """
         stores input data and returns it
