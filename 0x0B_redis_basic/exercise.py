@@ -44,7 +44,8 @@ class Cache:
         """parameterize value to int"""
         value = self._redis.get(key)
         try:
-            value = int(value.decode('utf-8'))
-        except Exception:
-            value = 0
-        return value
+            if value is None:
+                return 0 # returns default value
+            return int(value.decode('utf-8'))
+        except (ValueError, TypeError):
+            return 0 # handles conversion error
