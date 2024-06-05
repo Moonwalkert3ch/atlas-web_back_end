@@ -12,11 +12,10 @@ def count_calls(method: Callable) -> Callable:
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         """"defines wrapper function"""
-        key = method.__qualname__  # use methods name as key
-        self._redis.incr(key)  # increments redis count
-        return method(self, *args, **kwargs)  # calls original method
+        key = method.__qualname__ #use methods name as key
+        self._redis.incr(key) #increments redis count
+        return method(self, *args, **kwargs) # calls original method
     return wrapper
-
 
 def call_history(method: Callable) -> Callable:
     """decorator stores i/o history"""
@@ -25,7 +24,7 @@ def call_history(method: Callable) -> Callable:
         """defines wrapper for history"""
         input_key = "{}:inputs".format(method.__qualname__)
         output_key = "{}:outputs".format(method.__qualname__)
-        # store i/o lists in redis
+        #store i/o lists in redis
         self._redis.rpush(input_key, str(args))
         # execute original method
         format_method = method(self, *args, **kwargs)
@@ -33,28 +32,37 @@ def call_history(method: Callable) -> Callable:
         return format_method
     return wrapper
 
+def replay(fn: Callable):
+    """Display the history of calls of a particular function"""
+    r = redis.Redis()
+    method_name = fn.__qualname__
+    value = r.get(method_name)
+    try:
+        value = value.decode('utf-8')
+    except Exception:
+        value = 0
+    print(f'{method_name} was called {value} times:')
 
-def replay(method: Callable):
-    """Display history of calls for a specific method in Cache."""
-    method_name = method.__qualname__
-    cache = Cache()
-    inputs_key = f"{method_name}:inputs"
+    input_key = r.lrange(method_name + ":inputs", 0, -1)
+    output_key = r.lrange(method_name + ":outputs", 0, -1)
 
-    # Retrieve inputs from Redis
-    inputs = cache._redis.lrange(inputs_key, 0, -1)
+    for input, output in zip(input_key, output_key):
+        try:
+            input = input.decode('utf-8')
+        except Exception:
+            input = ""
+        try:
+            output = output.decode('utf-8')
+        except Exception:
+            output = ""
 
-    print(f"{method_name} was called {len(inputs)} times:")
-    for input_str in inputs:
-        input_args = eval(input_str.decode())  # Convert string back to tuple
-        print(f"{method_name}(*{input_args})")
-
+        print(f'{method_name}(*{input}) -> {output}')
 
 class Cache:
-    """stores Redis client instance"""
-
+    """stores Redis client input_keytance"""
     def __init__(self):
-        """create redis client instance"""
-        # store an instance of redis client as private var
+        """create redis client input_keytance"""
+        # store an input_keytance of redis client as private var
         self._redis = redis.Redis()
         self._redis.flushdb()
 
@@ -70,8 +78,7 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[callable]
-            = None) -> Union[str, bytes, int, float]:
+    def get(self, key: str, fn: Optional[callable] = None) -> Union[str, bytes, int, float]:
         """converts data back to desired format
         Param Args: key(str) - key to convert
         fn(optional(callable)) - optional function to convert
@@ -93,7 +100,7 @@ class Cache:
         """parameterize value to int"""
         value = self._redis.get(key)
         if value is None:
-            return 0  # returns default value
+            return 0 # returns default value
         try:
             return int(value.decode('utf-8'))
         except ValueError:
