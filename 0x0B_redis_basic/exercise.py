@@ -2,8 +2,7 @@
 """Writing strings to Redis"""
 import redis
 import uuid
-from typing import Union
-
+from typing import Union, Optional
 
 class Cache:
     """stores Redis client instance"""
@@ -22,3 +21,16 @@ class Cache:
         key = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
+
+    def get(self, key: str, fn: Optional[callable]) -> bytes:
+        """converts data back to desired format
+        Param Args: key(str) - key to convert
+        fn(optional(callable)) - optional function to convert
+        Return - converted data
+        """
+        value = self._redis.get(key)
+        if value is None:
+            return None
+        if fn:
+            return fn(value)
+        return value
