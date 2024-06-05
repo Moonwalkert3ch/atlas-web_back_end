@@ -22,7 +22,7 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[callable]) -> bytes:
+    def get(self, key: str, fn: Optional[callable]) -> Union[str, bytes, int, float]:
         """converts data back to desired format
         Param Args: key(str) - key to convert
         fn(optional(callable)) - optional function to convert
@@ -33,4 +33,18 @@ class Cache:
             return None
         if fn:
             return fn(value)
+        return value
+
+    def get_str(self, key: str) -> str:
+        """parameterize value to string"""
+        value = self._redis.get(key)
+        return value.decode('utf-8')
+
+    def get_int(self, key: str) -> int:
+        """parameterize value to int"""
+        value = self._redis.get(key)
+        try:
+            value = int(value.decode('utf-8'))
+        except Exception:
+            value = 0
         return value
