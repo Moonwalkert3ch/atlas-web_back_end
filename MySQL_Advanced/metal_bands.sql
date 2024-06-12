@@ -4897,7 +4897,6 @@ INSERT INTO `metal_bands` (`band_name`, `fans`, `formed`, `id`, `origin`, `split
 
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
->>>>>>> 628916bcd87a147c0f0583e21e88dd3d5f9f0176
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
@@ -4905,8 +4904,3 @@ INSERT INTO `metal_bands` (`band_name`, `fans`, `formed`, `id`, `origin`, `split
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-<<<<<<< HEAD
-
--- Dump completed on 2024-06-11 23:28:19
-=======
->>>>>>> 628916bcd87a147c0f0583e21e88dd3d5f9f0176
