@@ -6,7 +6,6 @@ def schools_by_topic(mongo_collection, topic):
     """mongo_collection - pymongo collection object
     topic(str) - searched topic
     Return - specific topic"""
-    document = mongo_collection.find({"topic": topic})
-    doc_list = [docs for docs in document ]
-    return doc_list
+    document = mongo_collection.find({"topics": topic})
+    return list(document)
 
