@@ -1,0 +1,3 @@
+#!/usr/bin/env python3
+// Write a script that lists all datbasses in MongoDB
+show dbs
