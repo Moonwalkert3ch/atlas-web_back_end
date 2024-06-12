@@ -2,11 +2,11 @@
 -- bands will be ranked by their longevity
 SELECT
 	band_name,
-	TIMESTAMPDIFF(YEAR, forward, IFNULL(split,CURDATE())) AS lifespan
+	TIMESTAMPDIFF(YEAR, forward, IFNULL(split, CURDATE())) AS lifespan
 FROM
 	metal_bands
 WHERE
-	FIND_IN_SET('Glam rock', style)
+	main_style = 'Glam rock'
 ORDER BY
 	lifespan DESC;
 
