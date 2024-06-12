@@ -1,8 +1,3 @@
--- MySQL dump 10.13  Distrib 5.7.42, for Linux (x86_64)
---
--- Host: localhost    Database: metal_bands
--- ------------------------------------------------------
--- Server version	5.7.42-0ubuntu0.18.04.1
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
