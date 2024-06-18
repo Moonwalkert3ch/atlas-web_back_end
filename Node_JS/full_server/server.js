@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
-const route = require('./routes');
+const routers = require('./routes');
 
-app.use('/', route);
+app.use('/', routers);
 
 app.listen(port, () => {
     console.log('Server is running...');
