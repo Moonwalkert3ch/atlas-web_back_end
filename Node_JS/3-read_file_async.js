@@ -28,8 +28,10 @@ async function countStudents(path) {
             console.log(`Number of students in ${field}: ${fields[field].length}. List: ${fields[field].join(', ')}`);
         }
         // return statement
+        numberOfStudents = number_of_students;
         return {
-            numberOfStudents: number_of_students,
+            // numberOfStudents: number_of_students,
+            numberOfStudents,
             fields
         };
 
