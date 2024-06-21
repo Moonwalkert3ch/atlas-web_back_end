@@ -17,17 +17,22 @@ async function countStudents(path) {
 
             fields[field].push(firstname);
         });
-        
+
         // Calculates number_of_students number of students
         const number_of_students = Object.values(fields).reduce((newStudents, currentStudent) => newStudents + currentStudent.length, 0);
-        
+
         console.log(`Number of students: ${number_of_students}`);
-        
+
         // number of students in each field
         for (const field in fields) {
             console.log(`Number of students in ${field}: ${fields[field].length}. List: ${fields[field].join(', ')}`);
         }
-        
+        // return statement
+        return {
+            numberOfStudents: number_of_students,
+            fields
+        };
+
     } catch (err) {
         console.error('Cannot load the database');
         throw err;
