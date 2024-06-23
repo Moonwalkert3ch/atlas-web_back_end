@@ -1,0 +1,21 @@
+{
+  "name": "unittests_in_js",
+  "version": "1.0.0",
+  "description": "Resources Read or watch:",
+  "main": "0-calcul.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "sinon": "^7.5.0"
+  },
+  "devDependencies": {
+    "mocha": "^10.4.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
