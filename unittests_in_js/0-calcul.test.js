@@ -30,4 +30,3 @@ describe('calculateNumber', () => {
         assert.strictEqual(calculateNumber(-1.5, -3.7), -5);
     });
 });
-
