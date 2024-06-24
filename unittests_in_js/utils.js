@@ -14,9 +14,9 @@ const Utils = {
             }
         };
 
-    // Checks if the type is an operator, if its not will return 'Invalid type'
+    // Checks if the type is an operator, if its not returns 'Invalid type'
     if (type in operators) {
-        return operators[type](); // Executes the operation function
+        return operators[type](); // Executes function
     } else {
         return 'Invalid type';
     }
