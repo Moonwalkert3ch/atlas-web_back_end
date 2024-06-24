@@ -26,8 +26,8 @@ describe('calculateNumber', () => {
         assert.strictEqual(calculateNumber('DIVIDE', 0, 0), 'Error');
     });
 
-    it('should return -3 when type is SUBTRACT, and inputs are 4.5 and 1.4', () => {
-        assert.strictEqual(calculateNumber('SUBTRACT', 4.5, 1.4), 3.1);
+    it('should return 4 when type is SUBTRACT, and inputs are 4.5 and 1.4', () => {
+        assert.strictEqual(calculateNumber('SUBTRACT', 4.5, 1.4), 4);
     });
 
 });

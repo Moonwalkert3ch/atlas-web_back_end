@@ -7,7 +7,7 @@ function calculateNumber(type, a, b) {
         'SUBTRACT': () => a - b,
         'DIVIDE': () => {
             if (b === 0) {
-                return 'ERROR';
+                return 'Error';
             }
             return a / b;
     }
