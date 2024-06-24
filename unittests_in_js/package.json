@@ -6,12 +6,11 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {
-    "sinon": "^7.5.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "^4.4.1",
-    "mocha": "^10.4.0"
+    "mocha": "^10.4.0",
+    "sinon": "^7.5.0"
   },
   "scripts": {
     "test": "mocha"
