@@ -1,3 +1,5 @@
 redis-6.0.10
 node_modules
-redis-6.0.10.gz
+redis-6.0.10.*
+redis-5.0.7
+redis-5.0.7.*
