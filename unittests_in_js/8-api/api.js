@@ -1,16 +1,12 @@
 const express = require('express');
-const app = express();
 const port = 7865;
 
-// route get /
+const app = express();
 app.get('/', (req, res) => {
-    res.status(200);
-    res.send('Welcome to the payment system');
-});
-
-// listen to server
+	res.send('Welcome to the payment system');
+})
 app.listen(port, () => {
-    console.log(`API available on localhost port ${port}`);
+  console.log(`API available on localhost port ${port}`);
 });
 
 module.exports = app;
