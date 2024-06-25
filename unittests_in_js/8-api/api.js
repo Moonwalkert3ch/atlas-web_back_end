@@ -5,7 +5,7 @@ const port = 7865;
 // route get /
 app.get('/', (req, res) => {
     res.status(200);
-    res.end('Welcome to the payment system');
+    res.send('Welcome to the payment system');
 });
 
 // listen to server
