@@ -2,17 +2,18 @@ const request = require('request');
 const { expect } = require('chai');
 
 describe('Index page', () => {
-    it('Returns the right status', (done) => {
-      request('http://localhost:7865', (err, res, body) => {
-        expect(res.statusCode).to.equal(200);
-        done();
-      });
-    });
+  describe('GET /', () => {
+    it('Code: 200 | Body: Welcome to the payment system', (done) => {
+      const options = {
+        url: 'http://localhost:7865',
+        method: 'GET',
+      };
   
-    it('returns correct result', (done) => {
-      request('http://localhost:7865', (err, res, body) => {
-        expect(body).to.equal('Welcome to the payment system');
+    request(options, function(err, res, body) {
+      expect(res.statusCode).to.equal(200);
+      expect(body).to.equal('Welcome to the payment system');
         done();
       });
     });
+  });
 });
