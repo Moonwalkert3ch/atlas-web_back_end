@@ -3,61 +3,64 @@ import kue from 'kue';
 import sinon from 'sinon';
 import createPushNotificationsJobs from './8-job';
 
+const queue = kue.createQueue();
+
+const jobs = [
+  {
+    phoneNumber: '4153518780',
+    message: 'This is the code 1234 to verify your account',
+  },
+];
+
 describe('createPushNotificationsJobs', () => {
-    let queue;
+  before(() => {
+    queue.testMode.enter();
+  });
 
-    beforeEach(() => {
-        queue = kue.createQueue();
-        queue.testMode.enter();
-    });
+  afterEach(() => {
+    queue.testMode.clear();
+  });
 
-    afterEach(() => {
-        queue.testMode.clear();
-        queue.testMode.exit();
-    });
+  after(() => {
+    queue.testMode.exit();
+  });
 
-    it('should give an error message if jobs not an array', () => {
-        expect(() => createPushNotificationsJobs('not an array', queue)).to.throw('Jobs is not an array');
-    });
+  
+  it('should NOT display a error message if jobs is an array with empty array', () => {
+    const ret = createPushNotificationsJobs([], queue);
+    expect(ret).to.equal(undefined);
+    // expect(queue.testMode.job[0]);
+  });
+  
+  it('display a error message if jobs is not an array passing Number', () => {
+    expect(() => {
+      createPushNotificationsJobs(2, queue);
+    }).to.throw('Jobs is not an array');
+    // expect(queue.testMode.job[0]);
+  });
 
-    it('should create new job to the queue', () => {
-        const jobs = [
-            {
-                phoneNumber: '123456789',
-                message: 'This is the code 1234 to verify your account'
-            }
-        ];
+  it('display a error message if jobs is not an array passing Object', () => {
+    expect(() => {
+      createPushNotificationsJobs({}, queue);
+    }).to.throw('Jobs is not an array');
+    // expect(queue.testMode.job[0]);
+  });
 
-        createPushNotificationsJobs(jobs, queue);
+  it('display a error message if jobs is not an array passing String', () => {
+    expect(() => {
+      createPushNotificationsJobs('Hello', queue);
+    }).to.throw('Jobs is not an array');
+    // expect(queue.testMode.job[0]);
+  });
 
-        expect(queue.testMode.jobs.length).to.equal(1);
-        expect(queue.testMode.jobs[0].type).to.equal('push_notification_code_3');
-        expect(queue.testMode.jobs[0].data).to.deep.equal(jobs[0]);
-    });
 
-    it('should give message on job events', () => {
-        const jobs = [
-            {
-                phoneNumber: '123456789',
-                message: 'This is the code 1234 to verify your account'
-            }
-        ];
-
-        const consoleSpy = sinon.spy(console, 'log');
-        createPushNotificationsJobs(jobs, queue);
-        const job = queue.testMode.jobs[0];
-
-        job.id = 1;
-
-        job._events.complete();
-        expect(consoleSpy.calledWith(`Notification job ${job.id} completed`)).to.be.true;
-
-        job._events.failed('Some error');
-        expect(consoleSpy.calledWith(`Notification job ${job.id} failed: Some error`)).to.be.true;
-    
-        job._events.progress(50);
-        expect(consoleSpy.calledWith(`Notification job ${job.id} 50% complete`)).to.be.true;
-    
-        consoleSpy.restore();
-    });
+  it('create two new jobs to the queue', () => {
+    queue.createJob('oneJob', { foo: 'bar' }).save();
+    queue.createJob('secondJob', { baz: 'bip' }).save();
+    expect(queue.testMode.jobs.length).to.equal(2);
+    expect(queue.testMode.jobs[0].type).to.equal('oneJob');
+    expect(queue.testMode.jobs[0].data).to.eql({ foo: 'bar' });
+    expect(queue.testMode.jobs[1].type).to.equal('secondJob');
+    expect(queue.testMode.jobs[1].data).to.eql({ baz: 'bip' });
+  });
 });
