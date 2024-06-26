@@ -5,8 +5,8 @@ describe('Index page', () => {
   const endpoint = 'http://localhost:7865';
 
   it('Returns the right status', function (done) {
-    request(endpoint, function (error, response, body) {
-      expect(response.statusCode).to.equal(200);
+    request(endpoint, function (err, res, body) {
+      expect(res.statusCode).to.equal(200);
       done();
     });
   });
